@@ -20,7 +20,7 @@ if (${TEST_COVERAGE})
     MESSAGE("Generating coverage information for debug builds")
     set(COVERAGE_DIR ${OUTPUT_DIR}/coverage)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --coverage")
-    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --coverage")
+	# set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --coverage")
 
 	if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 			MESSAGE("Searching for llvm-cov")
@@ -34,7 +34,8 @@ if (${TEST_COVERAGE})
             --directory "${OUTPUT_DIR}"
             --no-external
             --gcov-tool "${COVERAGE_COMMAND}"
-            --rc lcov_branch_coverage=1)
+            --rc lcov_branch_coverage=1
+            --rc geninfo_all_blocks=true)
     set(GENHTML_EXTRA_ARGS --show-details --frames --legend
             --branch-coverage --function-coverage --sort
             --demangle-cpp
