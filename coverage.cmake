@@ -1,33 +1,17 @@
 # mary, 2015/05/27
 
+# Creating Coverage Reports without Debug information is nonsense.
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     set(TEST_COVERAGE "true" CACHE BOOL "Set to true, to gather coverage information")
-endif()
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    # required for ccache
-    set(ENV{CCACHE_CPP2} "true")
-    add_definitions("-Wno-error=unused-command-line-argument")
-    
-    find_program(LLVM_COV llvm-cov)
-    if (DEFINED LLVM_COV)
-        set(COVERAGE_COMMAND "${LLVM_COV}" CACHE FILEPATH
-            "The coverage tool to use" FORCE)
-    endif()
+elseif(${TEST_COVERAGE})
+    message(WARNING "Test Coverage is true, but CMAKE_BUILD_TYPE is not Debug."
+        " Coverage information will not be generated")
 endif()
 
 if (${TEST_COVERAGE})
     MESSAGE("Generating coverage information for debug builds")
     set(COVERAGE_DIR ${OUTPUT_DIR}/coverage)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --coverage")
-	# set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --coverage")
-
-	if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-			MESSAGE("Searching for llvm-cov")
-			find_program(COV_COMMAND llvm-cov)
-			set(COVERAGE_COMMAND "${COV_COMMAND}"
-				CACHE FILEPATH "Coverage Tool" FORCE)
-	endif()
 
     set(LCOV_INFO ${COVERAGE_DIR}/coverage.info)
     set(LCOV_EXTRA_ARGS --base-directory "${CPP_SOURCE_DIR}" 
