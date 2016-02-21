@@ -19,3 +19,7 @@ SET(CPP_SOURCE_DIR "${SOURCE_DIR}/main/cpp")
 SET(CPP_BINARY_DIR "${OUTPUT_DIR}/main/cpp")
 SET(CPP_TESTSRC_DIR "${SOURCE_DIR}/test/cpp")
 SET(CPP_TESTBIN_DIR "${OUTPUT_DIR}/test/cpp")
+
+add_custom_target(distclean
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_LIST_DIR}/distclean.cmake
+    DEPENDS ${OUTPUT_DIR})
