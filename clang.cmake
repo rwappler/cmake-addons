@@ -10,7 +10,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     endif()
     
     # just for the case, you want to generate coverage information
-    MESSAGE("Searching for llvm-cov")
+	MESSAGE("Searching for llvm-cov")
 	find_program(COV_COMMAND llvm-cov)
 	if(COV_COMMAND)
 	    set(COVERAGE_COMMAND "${COV_COMMAND}"

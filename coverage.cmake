@@ -28,8 +28,9 @@ if (${TEST_COVERAGE})
     add_custom_target(CreateCoverageDir ${CMAKE_COMMAND} -E make_directory
         "${COVERAGE_DIR}")
     add_custom_command(OUTPUT "${LCOV_INFO}.base"
-        COMMAND lcov --capture --initial ${LCOV_EXTRA_ARGS}
-            --output-file "${LCOV_INFO}.base"
+        COMMAND lcov --capture --initial
+            --output-file="${LCOV_INFO}.base"
+			${LCOV_EXTRA_ARGS}
         DEPENDS CreateCoverageDir
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
